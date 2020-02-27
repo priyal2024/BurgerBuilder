@@ -31,7 +31,16 @@ class BurgeBuilder extends Component {
         this.setState({purchasing:false});
     }
     purchaseContinueHandler = () => {
-        alert('You Continue!');
+        const quryParams = [];
+        for(let i in this.state.ingredients){
+            quryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+        }
+        quryParams.push('price='+ this.state.totalPrice);
+        const queryString = quryParams.join('&');
+        this.props.history.push({
+            pathname:'/checkout',
+            search:'?' + queryString
+        });
     }
 
     updatePurchase(ingredients){
